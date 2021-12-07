@@ -1,5 +1,5 @@
-echo "Importing policies from policies folder..."
 @echo off
+echo "Importing policies from policies folder..."
 cd %~dp0
 copy LGPO.exe C:\Windows\System32
 
