@@ -44,7 +44,7 @@ if %ERRORLEVEL% equ 1 (
     if !ERRORLEVEL! equ 3 (
         echo Skipping services... 
     ) else (
-        set services = RemoteAccess Telephony TapiSrv Tlntsvr tlntsvr p2pimsvc simptcp fax msftpsvc iprip ftpsvc RemoteRegistry RasMan RasAuto seclogon MSFTPSVC W3SVC SMTPSVC Dfs TrkWks MSDTC DNS ERSVC NtFrs MSFtpsvc helpsvc HTTPFilter IISADMIN IsmServ WmdmPmSN Spooler RDSessMgr RPCLocator RsoPProv ShellHWDetection ScardSvr Sacsvr TermService Uploadmgr VDS VSS WINS WinHttpAutoProxySvc SZCSVC CscService hidserv IPBusEnum PolicyAgent SCPolicySvc SharedAccess SSDPSRV Themes upnphost nfssvc nfsclnt MSSQLServerADHelper
+        set services=RemoteAccess Telephony TapiSrv Tlntsvr tlntsvr p2pimsvc simptcp fax msftpsvc iprip ftpsvc RemoteRegistry RasMan RasAuto seclogon MSFTPSVC W3SVC SMTPSVC Dfs TrkWks MSDTC DNS ERSVC NtFrs MSFtpsvc helpsvc HTTPFilter IISADMIN IsmServ WmdmPmSN Spooler RDSessMgr RPCLocator RsoPProv ShellHWDetection ScardSvr Sacsvr TermService Uploadmgr VDS VSS WINS WinHttpAutoProxySvc SZCSVC CscService hidserv IPBusEnum PolicyAgent SCPolicySvc SharedAccess SSDPSRV Themes upnphost nfssvc nfsclnt MSSQLServerADHelper
         echo ------------------------------------------------------------------------------------
         echo *** Managing services...                                                         ***
         Rem Automatic mode
@@ -52,7 +52,7 @@ if %ERRORLEVEL% equ 1 (
             for %%a in (!services!) do (
                 echo Disabling %%a
                 sc stop "%%a"
-                sc config "%%a" start = disabled
+                sc config "%%a" start=disabled
             )
         Rem Manual mode
         ) else (
@@ -61,7 +61,7 @@ if %ERRORLEVEL% equ 1 (
                 if !ERRORLEVEL! equ 1 (
                     echo Disabling %%a...
                     sc stop "%%a"
-                    sc config "%%a" start = disabled
+                    sc config "%%a" start=disabled
                 ) else (
                     echo Skipping %%a...
                 )
@@ -80,13 +80,13 @@ if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
     echo *** Disabling remote desktop...                                                  ***
     sc stop "TermService"
-    sc config "TermService" start = disabled
+    sc config "TermService" start=disabled
     sc stop "SessionEnv"
-    sc config "SessionEnv" start = disabled
+    sc config "SessionEnv" start=disabled
     sc stop "UmRdpService"
-    sc config "UmRdpService" start = disabled
+    sc config "UmRdpService" start=disabled
     sc stop "RemoteRegistry"
-    sc config "RemoteRegistry" start = disabled
+    sc config "RemoteRegistry" start=disabled
     reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 1 /f
     reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" /v "fDenyTSConnections" /t REG_DWORD /d 1 /f
     echo *** Finished                                                                     ***
@@ -230,9 +230,10 @@ if %ERRORLEVEL% equ 2 echo Skipping user audit...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
     echo *** Performing user audit...                                                     ***
-    echo Changing password of every user to "Cyb3rPatr1ot!@"
+    echo Changing password of every user to "q1W@e3R$t5Y^u7I*o9"
     for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
-        net user %%a Cyb3rPatr1ot!@
+        echo Changing password of %%a...
+        net user %%a q1W@e3R$t5Y^u7I*o9
     )
        
     Rem Populate array of users in file
