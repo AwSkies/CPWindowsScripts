@@ -230,6 +230,7 @@ if %ERRORLEVEL% equ 2 echo Skipping user audit...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
     echo *** Performing user audit...                                                     ***
+    Rem Change passwords of all users
     echo Changing password of every user to "q1W@e3R$t5Y^u7I*o9"
     for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
         echo Changing password of %%a...
