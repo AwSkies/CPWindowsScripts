@@ -5,6 +5,8 @@ setlocal ENABLEDELAYEDEXPANSION
 
 echo ------------------------------------------------------------------------------------
 echo *** Welcome to Sharon CyberPatriot Windows 10 and Server2019 script!             ***
+echo *** Made for and by team 14-3178 of Sharon High School                           ***
+echo *** In the following options, choose y for yes, n for no, and c to cancel script ***
 echo ------------------------------------------------------------------------------------
 echo:
 
