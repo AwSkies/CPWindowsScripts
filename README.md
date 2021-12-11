@@ -1,8 +1,8 @@
 # Scripts for CyberPatriot
 ## Windows 10 and Server2019
 Made by CyberPatriot team of Sharon High School, number 14-3178
-## To use:
-Run/double click `secure.bat`. When prompted, type `y` for yes, `n` for no, and `c` to stop execution.
+## To Run
+Open a `Windows Commands Prompt` window as an administrator, CD into the working directory, and run `secure.bat` (simply selecting to run the file as an administrator does not work, since it will open it with a working directory of `C:\WINDOWS\system32\`). When prompted, type `y` for yes, `n` for no, and `c` to stop execution.
 ## Functions
 ### Enable Firewall
 It enables the firewall.
