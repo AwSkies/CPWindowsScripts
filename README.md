@@ -39,7 +39,8 @@ Deletes files of type:
 - gif
 - png
 - jpg
-- jpeg
+- jpeg  
+
 recursively in the `C:\Users\` directory. If chosen, the user will be prompted with either manual or automatic mode.
 #### Manual Mode
 Steps through each individual file type, then file. The user is able to skip both entire file types and individual files.  
