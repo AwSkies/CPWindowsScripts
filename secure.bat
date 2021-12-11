@@ -10,20 +10,6 @@ echo *** In the following options, choose y for yes, n for no, and c to cancel s
 echo ------------------------------------------------------------------------------------
 echo:
 
-rem Guest and Admin
-choice /c ync /m "Do you wish to disable guest and admin accounts? "
-if %ERRORLEVEL% equ 3 goto:eof
-if %ERRORLEVEL% equ 2 echo Skipping guest and admin accounts...
-if %ERRORLEVEL% equ 1 (
-    echo ------------------------------------------------------------------------------------
-    echo *** Disabling guest and admin accounts...                                        ***
-    net user administrator /active:no
-    net user guest /active:no
-    echo *** Finished                                                                     ***
-    echo ------------------------------------------------------------------------------------
-    echo:
-)
-
 rem Firewall
 choice /c ync /m "Do you wish to enable firewall? "
 if %ERRORLEVEL% equ 3 goto:eof
@@ -220,6 +206,20 @@ if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
     echo *** Importing policies from policies folder...                                   ***
     .\LGPO.exe /g .\Policies /v
+    echo *** Finished                                                                     ***
+    echo ------------------------------------------------------------------------------------
+    echo:
+)
+
+rem Guest and Admin
+choice /c ync /m "Do you wish to disable guest and admin accounts? "
+if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 2 echo Skipping guest and admin accounts...
+if %ERRORLEVEL% equ 1 (
+    echo ------------------------------------------------------------------------------------
+    echo *** Disabling guest and admin accounts...                                        ***
+    net user administrator /active:no
+    net user guest /active:no
     echo *** Finished                                                                     ***
     echo ------------------------------------------------------------------------------------
     echo:
