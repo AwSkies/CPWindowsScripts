@@ -233,10 +233,15 @@ if %ERRORLEVEL% equ 1 (
     Rem Change passwords of all users
     echo Changing password of every user to "q1W@e3R$t5Y^u7I*o9"
     for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
-        echo Changing password of %%a...
-        net user %%a q1W@e3R$t5Y^u7I*o9
+        if !USERNAME! equ %%a (
+            echo Skipping current user %%a...
+            echo:
+        ) else (
+            echo Changing password of %%a...
+            net user %%a q1W@e3R$t5Y^u7I*o9
+        )
     )
-       
+
     Rem Populate array of users in file
     ::echo Reading authorizedusers.txt for authorized users...
     ::set /a i = 0
