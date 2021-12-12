@@ -274,8 +274,10 @@ if %ERRORLEVEL% equ 1 (
         echo *** Deleting disallowed media file types...                                      ***
         Rem Automatic mode
         if !ERRORLEVEL! equ 1 (
+            :: %%i = file extension
             for %%i in (!filetypes!) do (
                 echo Deleting all .%%i files...
+                :: %%a = individual file
                 for /f "delims=" %%a in ('dir /s /b *.%%i') do (
                     echo Deleting %%a...
                     del %%a
@@ -283,17 +285,23 @@ if %ERRORLEVEL% equ 1 (
             )
         Rem Manual mode
         ) else (
+            :: %%i = file extension
             for %%i in (!filetypes!) do (
                 choice /c yn /m "Do you wish to delete .%%i files? "
                 if !ERRORLEVEL! equ 1 (
                     echo Deleting .%%i files...
+                    :: %%a = individual file
                     for /f "delims=" %%a in ('dir /s /b *.%%i') do (
-                        choice /c yn /m "Do you wish to delete %%a? "
+                        choice /c yno /m "Do you wish to delete %%a? "
                         if !ERRORLEVEL! equ 1 (
                             echo Deleting %%a...
                             del %%a
                         ) else (
-                            echo Skipping %%a...
+                            if !ERRORLEVEL! equ 2 (
+                                echo Skipping %%a...
+                            ) else (
+                                explorer.exe %%a\..
+                            )
                         )
                     )
                 ) else (

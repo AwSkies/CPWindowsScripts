@@ -9,10 +9,10 @@ It enables the firewall.
 ### Services
 Allows for the disabling of services. If chosen, the user will be prompted with either manual or automatic mode.
 #### Manual Mode
-Steps through each individual service and disables them. The user is able to skip disabling each service.  
-Manual mode is *HIGHLY RECOMMENDED* as there are often critical services that the user does not want to disable in the list of services.
+Steps through each individual service and disables them. The user is able to skip disabling each service.
 #### Automatic Mode
-Disables every service on the list.
+Disables every service on the list.  
+**Manual mode is *HIGHLY RECOMMENDED* as there are often critical services that the user does not want to disable in the list of services.**
 ### Remote Desktop
 Disables remote desktop. This is an important service that gets its own category, as it has many different services associated with it and is often made a critical service.
 ### Registry Keys
@@ -43,7 +43,7 @@ Deletes files of type:
 
 recursively in the `C:\Users\` directory. If chosen, the user will be prompted with either manual or automatic mode.
 #### Manual Mode
-Steps through each individual file type, then file. The user is able to skip both entire file types and individual files.  
-Manual mode is *HIGHLY RECOMMENDED* as automatic mode may risk deleting (irreversably) media that is a part of some programs.
+Steps through each individual file type, then file. The user is prompted whether they wish to search for files of a certain file type, then prompted whether or not they want to delete each file found. They may also press `O` to open the file's location in the file explorer. 
 #### Automatic Mode
-Deletes every file found with a disallowed type.
+Deletes every file found with a disallowed type.  
+**Manual mode is *HIGHLY RECOMMENDED* as automatic mode may risk deleting (irreversably) media that is a part of some programs.**
