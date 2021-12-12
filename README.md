@@ -22,7 +22,8 @@ Imports Local Group Policy Objects from `.\Policies\`.
 ### Guest and Admin
 Disables `Guest` and `Administrator` default accounts.
 ### User Audit
-Reads users from `authorizedusers.txt`, deletes all users not on the list, and adds users on the list but missing from the computer (with a password of `q1W@e3R$t5Y^u7I*o9`). **Be sure that all built-in accounts (`Administrator`, `Guest`, `DefaultAccount`, `WDAGUtilityAccount`) are in the list or else it will try and fail to delete them. The accounts are already there in the list, so just don't remove them.** It's recommended to modify `authorizedusers.txt` only after copying the scripts folder into the VM.
+Reads users from `authorizedusers.txt`, deletes all users not on the list, and adds users on the list but missing from the computer (with a password of `q1W@e3R$t5Y^u7I*o9`). When adding missing users, the user will be prompted if they want to make a password longer than 14 characters, since Windows versions older than Windows 2000 will be unable to use the account.  
+**Be sure that all built-in accounts (`Administrator`, `Guest`, `DefaultAccount`, `WDAGUtilityAccount`) are in the list or else it will try and fail to delete them. The accounts are already there in the list, so just don't remove them.** It's recommended to modify `authorizedusers.txt` only after copying the scripts folder into the VM.
 ### User Passwords
 Changes the password of every user except for the one currently in use to `q1W@e3R$t5Y^u7I*o9`.
 ### Disallowed Media Files
