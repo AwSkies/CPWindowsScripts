@@ -21,8 +21,8 @@ Manages registry keys and sets very many settings. Be careful when using it, as 
 Imports Local Group Policy Objects from `.\Policies\`.
 ### Guest and Admin
 Disables `Guest` and `Administrator` default accounts.
-### Unauthorized Users
-Reads users from `authorizedusers.txt` and deletes all users not on the list. **Be sure that all built-in accounts (`Administrator`, `Guest`, `DefaultAccount`, `WDAGUtilityAccount`) are in the list or else it will try and fail to delete them. The accounts are already there in the list, so just don't remove them.** It's recommended to modify `authorizedusers.txt` only after copying the scripts folder into the VM.
+### User Audit
+Reads users from `authorizedusers.txt`, deletes all users not on the list, and adds users on the list but missing from the computer (with a password of `q1W@e3R$t5Y^u7I*o9`). **Be sure that all built-in accounts (`Administrator`, `Guest`, `DefaultAccount`, `WDAGUtilityAccount`) are in the list or else it will try and fail to delete them. The accounts are already there in the list, so just don't remove them.** It's recommended to modify `authorizedusers.txt` only after copying the scripts folder into the VM.
 ### User Passwords
 Changes the password of every user except for the one currently in use to `q1W@e3R$t5Y^u7I*o9`.
 ### Disallowed Media Files

@@ -265,18 +265,18 @@ if %ERRORLEVEL% equ 1 (
     echo:
 )
 
-Rem Delete Unauthorized Users
-choice /c ync /m "Do you wish to delete unauthorized users? (Authorized users should be listed in authorizedusers.txt) "
+Rem User Audit
+choice /c ync /m "Do you wish to perform a user audit? (Authorized users should be listed in authorizedusers.txt) "
 if %ERRORLEVEL% equ 3 (
     echo Canceling...
     pause
     goto:eof
 )
-if %ERRORLEVEL% equ 2 echo Skipping unauthorized users...
+if %ERRORLEVEL% equ 2 echo Skipping user audit...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
-    echo *** Removing unauthorized users...                                               ***
-    echo Reading unauthorizedusers.txt...
+    echo *** Performing user audit...                                                     ***
+    echo Reading authorizedusers.txt...
     Rem Make sure the authorized user file has something in it
     set /a lines=0
     for /f "tokens=*" %%i in (authorizedusers.txt) do (
@@ -292,6 +292,8 @@ if %ERRORLEVEL% equ 1 (
         type authorizedusers.txt
         echo:
         echo:
+        
+        Rem Delete unauthorized users
         echo Deleting unauthorized users...
         Rem Loops through each user on the computer
         set "unauthorizedusersexist="
@@ -300,20 +302,39 @@ if %ERRORLEVEL% equ 1 (
             set "userauthorized="
             for /f "tokens=*" %%i in (authorizedusers.txt) do (
                 if %%a equ %%i (
+                    set seen[%%a]=y
                     set userauthorized=y
                 )
             )
             if not defined userauthorized (
                 set unauthorizedusersexist=y
-                echo Deleting %%a...
+                echo Deleting user: %%a...
                 net user %%a /delete
             )
         )
+        Rem Case in which no unauthorized users were deleted
         if not defined unauthorizedusersexist (
             echo No unauthorized users found.
         ) else (
             echo Done.
         )
+        echo:
+
+        Rem Add authorized users not made yet
+        echo Adding missing users...
+        set "missingusersexist="
+        for /f "tokens=*" %%a in (authorizedusers.txt) do (
+            if not defined seen[%%a] (
+                set missingusersexist=y
+                echo Adding missing user: %%a
+                net user %%a q1W@e3R$t5Y^u7I*o9 /add
+            )
+        )
+        if not defined missingusersexist (
+            echo No missing users found.
+        ) else (
+            echo Done.
+        ) 
     )
     echo *** Finished                                                                     ***
     echo ------------------------------------------------------------------------------------
