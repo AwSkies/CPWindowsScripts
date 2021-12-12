@@ -5,18 +5,18 @@ Made by CyberPatriot team of Sharon High School, number 14-3178
 Run `secure.bat` as an administrator, either by selecting run as administrator or by CDing into the directory and running the file. When prompted, type `y` for yes, `n` for no, and `c` to stop execution.
 ## Functions
 ### Enable Firewall
-It enables the firewall.
+Enables the firewall.
 ### Services
 Allows for the disabling of services. If chosen, the user will be prompted with either manual or automatic mode.
 #### Manual Mode
 Steps through each individual service and disables them. The user is able to skip disabling each service.
 #### Automatic Mode
 Disables every service on the list.  
-**Manual mode is *HIGHLY RECOMMENDED* as there are often critical services that the user does not want to disable in the list of services.**
+**Manual mode is *HIGHLY RECOMMENDED* as there are often critical services on the list that the user does not want to disable.**
 ### Remote Desktop
 Disables remote desktop. This is an important service that gets its own category, as it has many different services associated with it and is often made a critical service.
 ### Registry Keys
-Manages registry keys and sets very very many settings. Be careful when using it, as it changes many things and may mess up something specific to the competition scenario.
+Manages registry keys and sets very many settings. Be careful when using it, as it changes many things and may mess up something specific to the competition scenario.
 ### Import Policies
 Imports Local Group Policy Objects from `.\Policies\`.
 ### Guest and Admin
