@@ -5,6 +5,7 @@ title CyberPatriot Windows Script
 setlocal ENABLEDELAYEDEXPANSION
 Rem Find location with LGPO.exe and cd to it (for if the file was selected to run as admin)
 cd C:\Users
+:: Since there should be only one location with LGPO.exe in it (the scripts folder dragged into the VM) it should only cd once
 for /f "delims=" %%a in ('dir /s /b LGPO.exe') do (
     cd %%a\..
 )
