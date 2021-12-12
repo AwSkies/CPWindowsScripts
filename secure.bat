@@ -1,6 +1,7 @@
 @echo off
 rem Preferences and initialization
 color 0b
+title CyberPatriot Windows Script
 setlocal ENABLEDELAYEDEXPANSION
 Rem Find location with LGPO.exe and cd to it (for if the file was selected to run as admin)
 cd C:\Users
@@ -26,7 +27,11 @@ echo:
 
 rem Firewall
 choice /c ync /m "Do you wish to enable firewall? "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping firewall...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -39,7 +44,11 @@ if %ERRORLEVEL% equ 1 (
 
 Rem Services
 choice /c ync /m "Do you wish to disable any services? (Manual and automatic mode are available) "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping services...
 if %ERRORLEVEL% equ 1 (
     choice /c amc /m "Manual or automatic mode? (Manual mode steps through each service while automatic mode disables them all) "
@@ -76,7 +85,11 @@ if %ERRORLEVEL% equ 1 (
 
 rem Remote Desktop
 choice /c ync /m "Do you wish to disable remote desktop? "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping remote desktop...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -98,7 +111,11 @@ if %ERRORLEVEL% equ 1 (
 
 rem Registry keys
 choice /c ync /m "Do you wish to manage registry keys? "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping registry keys...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -214,7 +231,11 @@ if %ERRORLEVEL% equ 1 (
 
 rem Import Policies
 choice /c ync /m "Do you wish to import GPOs? "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping GPOs...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -227,7 +248,11 @@ if %ERRORLEVEL% equ 1 (
 
 rem Guest and Admin
 choice /c ync /m "Do you wish to disable guest and admin accounts? "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping guest and admin accounts...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -241,7 +266,11 @@ if %ERRORLEVEL% equ 1 (
 
 rem User Audit
 choice /c ync /m "Do you wish to perform a user audit? This includes changing passwords of every user and removing all users not in authorizedusers.txt. "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping user audit...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
@@ -275,7 +304,11 @@ if %ERRORLEVEL% equ 1 (
 
 Rem Disallowed Media Files
 choice /c ync /m "Do you wish to remove disallowed media files? (Manual and automatic mode are available) "
-if %ERRORLEVEL% equ 3 goto:eof
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
 if %ERRORLEVEL% equ 2 echo Skipping disallowed media files...
 if %ERRORLEVEL% equ 1 (
     choice /c amc /m "Manual or automatic mode? (Manual mode steps through each file type and file while automatic mode disables them all) (MANUAL MODE IS HIGHLY RECOMMENDED AS YOU WILL NOT ACCIDENTALLY DELETE IMAGES/MEDIA USED BY APPLICATIONS) "
