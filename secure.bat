@@ -2,6 +2,20 @@
 rem Preferences and initialization
 color 0b
 setlocal ENABLEDELAYEDEXPANSION
+Rem Find location with LGPO.exe and cd to it (for if the file was selected to run as admin)
+cd C:\Users
+for /f "delims=" %%a in ('dir /s /b LGPO.exe') do (
+    cd %%a\..
+)
+
+Rem Check if Command Prompt has admin permissions
+echo Checking if Command Prompt has administrator permissions...
+net sessions
+if %ERRORLEVEL% neq 0 (
+    echo This Command Prompt does not have administrator permissions. Right click the batch file and select "run as administrator".
+    pause
+    goto:eof
+)
 
 echo ------------------------------------------------------------------------------------
 echo *** Welcome to Sharon CyberPatriot Windows 10 and Server2019 script              ***
