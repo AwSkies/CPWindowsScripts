@@ -265,19 +265,72 @@ if %ERRORLEVEL% equ 1 (
     echo:
 )
 
-rem User Audit
-choice /c ync /m "Do you wish to perform a user audit? This includes changing passwords of every user and removing all users not in authorizedusers.txt. "
+Rem Delete Unauthorized Users
+choice /c ync /m "Do you wish to delete unauthorized users? (Authorized users should be listed in authorizedusers.txt) "
 if %ERRORLEVEL% equ 3 (
     echo Canceling...
     pause
     goto:eof
 )
-if %ERRORLEVEL% equ 2 echo Skipping user audit...
+if %ERRORLEVEL% equ 2 echo Skipping unauthorized users...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
-    echo *** Performing user audit...                                                     ***
-    Rem Change passwords of all users
-    echo Changing password of every user to "q1W@e3R$t5Y^u7I*o9"
+    echo *** Removing unauthorized users...                                               ***
+    echo Reading unauthorizedusers.txt...
+    Rem Make sure the authorized user file has something in it
+    set /a lines=0
+    for /f "tokens=*" %%i in (authorizedusers.txt) do (
+        set /a lines+=1
+    )
+    echo Done.
+    echo:
+    Rem Dissallow removing every user on the computer
+    if !lines! equ 0 (
+        echo There are no users listed in authorizedusers.txt. Please put the authorized users in and try again.
+    ) else (
+        echo Authorized users:
+        type authorizedusers.txt
+        echo:
+        echo:
+        echo Deleting unauthorized users...
+        Rem Loops through each user on the computer
+        set "unauthorizedusersexist="
+        for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
+            Rem Loops through each line (user) in authorizedusers.txt
+            set "userauthorized="
+            for /f "tokens=*" %%i in (authorizedusers.txt) do (
+                if %%a equ %%i (
+                    set userauthorized=y
+                )
+            )
+            if not defined userauthorized (
+                set unauthorizedusersexist=y
+                echo Deleting %%a...
+                net user %%a /delete
+            )
+        )
+        if not defined unauthorizedusersexist (
+            echo No unauthorized users found.
+        ) else (
+            echo Done.
+        )
+    )
+    echo *** Finished                                                                     ***
+    echo ------------------------------------------------------------------------------------
+    echo:
+)
+
+rem User Passwords
+choice /c ync /m "Do you wish to change all user passwords to a secure password? (Excludes current user) "
+if %ERRORLEVEL% equ 3 (
+    echo Canceling...
+    pause
+    goto:eof
+)
+if %ERRORLEVEL% equ 2 echo Skipping user passwords...
+if %ERRORLEVEL% equ 1 (
+    echo ------------------------------------------------------------------------------------
+    echo *** Changing password of every user to "q1W@e3R$t5Y^u7I*o9"...                   ***
     for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
         if !USERNAME! equ %%a (
             echo Skipping current user %%a...
@@ -287,17 +340,6 @@ if %ERRORLEVEL% equ 1 (
             net user %%a q1W@e3R$t5Y^u7I*o9
         )
     )
-
-    Rem Populate array of users in file
-    ::echo Reading authorizedusers.txt for authorized users...
-    ::set /a i = 0
-    ::for /f "tokens=*" %%a in (authorizedusers.txt) do (
-    ::    set /a i += 1
-    ::    echo !i!
-    ::    set authusers[!i!]=%%a
-    ::)
-    ::set /a total=!i!
-    ::for /l %%i in (1,1,!total!) do echo !authusers[%%i]!
     echo *** Finished                                                                     ***
     echo ------------------------------------------------------------------------------------
     echo:
