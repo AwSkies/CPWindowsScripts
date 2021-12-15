@@ -18,6 +18,7 @@ if %ERRORLEVEL% neq 0 (
     pause
     goto:eof
 )
+cls
 
 echo ------------------------------------------------------------------------------------
 echo *** Welcome to Sharon CyberPatriot Windows 10 and Server2019 script^^!             ***
