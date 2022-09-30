@@ -308,9 +308,14 @@ if %ERRORLEVEL% equ 1 (
                 )
             )
             if not defined userauthorized (
-                set unauthorizedusersexist=y
-                echo Deleting user: %%a...
-                net user %%a /delete
+                if !USERNAME! equ %%a (
+                    echo Skipping current user %%a...
+                    echo:
+                ) else (
+                    set unauthorizedusersexist=y
+                    echo Deleting user: %%a...
+                    net user %%a /delete
+                )
             )
         )
         Rem Case in which no unauthorized users were deleted
