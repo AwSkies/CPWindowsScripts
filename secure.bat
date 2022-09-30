@@ -397,7 +397,7 @@ if %ERRORLEVEL% equ 1 (
                 :: %%a = individual file
                 for /f "delims=" %%a in ('dir /s /b *.%%i') do (
                     echo Deleting %%a...
-                    del %%a
+                    del "%%a"
                 )
             )
         Rem Manual mode
@@ -412,7 +412,7 @@ if %ERRORLEVEL% equ 1 (
                         choice /c yno /m "Do you wish to delete %%a? "
                         if !ERRORLEVEL! equ 1 (
                             echo Deleting %%a...
-                            del %%a
+                            del "%%a"
                         ) else (
                             if !ERRORLEVEL! equ 2 (
                                 echo Skipping %%a...
