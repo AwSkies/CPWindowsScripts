@@ -54,14 +54,15 @@ if %ERRORLEVEL% equ 3 (
 if %ERRORLEVEL% equ 2 echo Skipping services...
 if %ERRORLEVEL% equ 1 (
     choice /c amc /m "Manual or automatic mode? (Manual mode steps through each service while automatic mode disables them all) "
-    if !ERRORLEVEL! equ 3 (
+    set /a mode=!ERRORLEVEL!
+    if !mode! equ 3 (
         echo Skipping services... 
     ) else (
         set services=Telephony TapiSrv Tlntsvr tlntsvr p2pimsvc simptcp fax msftpsvc iprip ftpsvc RasMan RasAuto seclogon MSFTPSVC W3SVC SMTPSVC Dfs TrkWks MSDTC DNS ERSVC NtFrs MSFtpsvc helpsvc HTTPFilter IISADMIN IsmServ WmdmPmSN Spooler RDSessMgr RPCLocator RsoPProv ShellHWDetection ScardSvr Sacsvr Uploadmgr VDS VSS WINS WinHttpAutoProxySvc SZCSVC CscService hidserv IPBusEnum PolicyAgent SCPolicySvc SharedAccess SSDPSRV Themes upnphost nfssvc nfsclnt MSSQLServerADHelper
         echo ------------------------------------------------------------------------------------
         echo *** Managing services...                                                         ***
         Rem Automatic mode
-        if !ERRORLEVEL! equ 1 (
+        if !mode! equ 1 (
             for %%a in (!services!) do (
                 echo Disabling %%a
                 sc stop "%%a"
@@ -382,7 +383,8 @@ if %ERRORLEVEL% equ 3 (
 if %ERRORLEVEL% equ 2 echo Skipping disallowed media files...
 if %ERRORLEVEL% equ 1 (
     choice /c amc /m "Manual or automatic mode? (Manual mode steps through each file type and file while automatic mode disables them all) (MANUAL MODE IS HIGHLY RECOMMENDED AS YOU WILL NOT ACCIDENTALLY DELETE IMAGES/MEDIA USED BY APPLICATIONS) "
-    if !ERRORLEVEL! equ 3 (
+    set /a mode=!ERRORLEVEL!
+    if !mode! equ 3 (
         echo Skipping disallowed media files... 
     ) else (
         set filetypes=mp3 mov mp4 avi mpg mpeg flac m4a flv ogg gif png jpg jpeg
@@ -390,7 +392,7 @@ if %ERRORLEVEL% equ 1 (
         echo ------------------------------------------------------------------------------------
         echo *** Deleting disallowed media file types...                                      ***
         Rem Automatic mode
-        if !ERRORLEVEL! equ 1 (
+        if !mode! equ 1 (
             :: %%i = file extension
             for %%i in (!filetypes!) do (
                 echo Deleting all .%%i files...
