@@ -375,7 +375,7 @@ if %ERRORLEVEL% equ 1 (
             echo Deleting unauthorized admins...
             Rem Loops through each admin
             set "unauthorizedadminsexist="
-            for /f "delims=" %%a in ('net localgroup Administrators') do (
+            for /f "delims=" %%a in ('admins.bat') do (
                 Rem Loops through each line (user) in file
                 set "useradmin="
                 for /f "tokens=*" %%i in (!adminsfile!) do (
