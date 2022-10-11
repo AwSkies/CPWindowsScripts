@@ -281,8 +281,8 @@ if %ERRORLEVEL% equ 1 (
 
     set usersfile=authorizedusers.txt
     choice /c yn /m "Do you wish to remove unauthorized users and add missing users? (Authorized users should be listed in !usersfile!) "
-    if %ERRORLEVEL% equ 2 echo Skipping authorized user check...
-    if %ERRORLEVEL% equ 1 (
+    if !ERRORLEVEL! equ 2 echo Skipping authorized user check...
+    if !ERRORLEVEL! equ 1 (
         echo Reading !usersfile!
         Rem Make sure the authorized user file has something in it
         set /a lines=0
@@ -352,8 +352,8 @@ if %ERRORLEVEL% equ 1 (
 
     set adminsfile=admins.txt
     choice /c yn /m "Do you wish to remove unauthorized admins and add missing ones? (Administrators should be listed in !adminsfile!) "
-    if %ERRORLEVEL% equ 2 echo Skipping admins check...
-    if %ERRORLEVEL% equ 1 (
+    if !ERRORLEVEL! equ 2 echo Skipping admins check...
+    if !ERRORLEVEL! equ 1 (
         echo Reading !adminsfile!...
         Rem Make sure the admins file has something in it
         set /a lines=0
