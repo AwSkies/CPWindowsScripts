@@ -268,7 +268,7 @@ if %ERRORLEVEL% equ 1 (
 )
 
 Rem User Audit
-choice /c ync /m "Do you wish to perform a user audit? (Authorized users should be listed in authorizedusers.txt) "
+choice /c ync /m "Do you wish to perform a user audit? "
 if %ERRORLEVEL% equ 3 (
     echo Canceling...
     pause
@@ -278,71 +278,149 @@ if %ERRORLEVEL% equ 2 echo Skipping user audit...
 if %ERRORLEVEL% equ 1 (
     echo ------------------------------------------------------------------------------------
     echo *** Performing user audit...                                                     ***
-    echo Reading authorizedusers.txt...
-    Rem Make sure the authorized user file has something in it
-    set /a lines=0
-    for /f "tokens=*" %%i in (authorizedusers.txt) do (
-        set /a lines+=1
-    )
-    echo Done.
-    echo:
-    Rem Dissallow removing every user on the computer
-    if !lines! equ 0 (
-        echo There are no users listed in authorizedusers.txt. Please put the authorized users in and try again.
-    ) else (
-        echo Authorized users:
-        type authorizedusers.txt
-        echo:
-        echo:
-        
-        Rem Delete unauthorized users
-        echo Deleting unauthorized users...
-        Rem Loops through each user on the computer
-        set "unauthorizedusersexist="
-        for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
-            Rem Loops through each line (user) in authorizedusers.txt
-            set "userauthorized="
-            for /f "tokens=*" %%i in (authorizedusers.txt) do (
-                if %%a equ %%i (
-                    set seen[%%a]=y
-                    set userauthorized=y
-                )
-            )
-            if not defined userauthorized (
-                if !USERNAME! equ %%a (
-                    echo Skipping current user %%a...
-                    echo:
-                ) else (
-                    set unauthorizedusersexist=y
-                    echo Deleting user: %%a...
-                    net user %%a /delete
-                )
-            )
-        )
-        Rem Case in which no unauthorized users were deleted
-        if not defined unauthorizedusersexist (
-            echo No unauthorized users found.
-        ) else (
-            echo Done.
-        )
-        echo:
 
-        Rem Add authorized users not made yet
-        echo Adding missing users...
-        set "missingusersexist="
-        for /f "tokens=*" %%a in (authorizedusers.txt) do (
-            if not defined seen[%%a] (
-                set missingusersexist=y
-                echo Adding missing user: %%a
-                net user %%a q1W@e3R$t5Y^u7I*o9 /add
-            )
+    set usersfile=authorizedusers.txt
+    choice /c yn /m "Do you wish to remove unauthorized users and add missing users? (Authorized users should be listed in !usersfile!) "
+    if %ERRORLEVEL% equ 2 echo Skipping authorized user check...
+    if %ERRORLEVEL% equ 1 (
+        echo Reading !usersfile!
+        Rem Make sure the authorized user file has something in it
+        set /a lines=0
+        for /f "tokens=*" %%i in (!usersfile!) do (
+            set /a lines+=1
         )
-        if not defined missingusersexist (
-            echo No missing users found.
+        echo Done.
+        echo:
+        Rem Dissallow removing every user on the computer
+        if !lines! equ 0 (
+            echo There are no users listed in !usersfile!. Please put the authorized users in and try again.
         ) else (
-            echo Done.
-        ) 
+            echo Authorized users:
+            type !usersfile!
+            echo:
+            echo:
+            
+            Rem Delete unauthorized users
+            echo Deleting unauthorized users...
+            Rem Loops through each user on the computer
+            set "unauthorizedadminsexist="
+            for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
+                Rem Loops through each line (user) in file
+                set "useradmin="
+                for /f "tokens=*" %%i in (!usersfile!) do (
+                    if %%a equ %%i (
+                        set seen[%%a]=y
+                        set useradmin=y
+                    )
+                )
+                if not defined useradmin (
+                    if !USERNAME! equ %%a (
+                        echo Skipping current user %%a...
+                        echo:
+                    ) else (
+                        set unauthorizedadminsexist=y
+                        echo Deleting user: %%a...
+                        net user %%a /delete
+                    )
+                )
+            )
+            Rem Case in which no unauthorized users were deleted
+            if not defined unauthorizedadminsexist (
+                echo No unauthorized users found.
+            ) else (
+                echo Done.
+            )
+            echo:
+
+            Rem Add authorized users not made yet
+            echo Adding missing users...
+            set "missingadminsexist="
+            for /f "tokens=*" %%a in (!usersfile!) do (
+                if not defined seen[%%a] (
+                    set missingadminsexist=y
+                    echo Adding missing user: %%a
+                    net user %%a q1W@e3R$t5Y^u7I*o9 /add
+                )
+            )
+            if not defined missingadminsexist (
+                echo No missing users found.
+            ) else (
+                echo Done.
+            ) 
+        )
     )
+
+    set adminsfile=admins.txt
+    choice /c yn /m "Do you wish to remove unauthorized admins and add missing ones? (Administrators should be listed in !adminsfile!) "
+    if %ERRORLEVEL% equ 2 echo Skipping admins check...
+    if %ERRORLEVEL% equ 1 (
+        echo Reading !adminsfile!...
+        Rem Make sure the admins file has something in it
+        set /a lines=0
+        for /f "tokens=*" %%i in (!adminsfile!) do (
+            set /a lines+=1
+        )
+        echo Done.
+        echo:
+        Rem Dissallow removing every admin
+        if !lines! equ 0 (
+            echo There are no users listed in !adminsfile!. Please put the admins in and try again.
+        ) else (
+            echo Administrators:
+            type !adminsfile!
+            echo:
+            echo:
+            
+            Rem Delete unauthorized admins
+            echo Deleting unauthorized admins...
+            Rem Loops through each admin
+            set "unauthorizedadminsexist="
+            for /f "delims=" %%a in ('net localgroup Administrators') do (
+                Rem Loops through each line (user) in file
+                set "useradmin="
+                for /f "tokens=*" %%i in (!adminsfile!) do (
+                    if %%a equ %%i (
+                        set seen[%%a]=y
+                        set useradmin=y
+                    )
+                )
+                if not defined useradmin (
+                    if !USERNAME! equ %%a (
+                        echo Skipping current user %%a...
+                        echo:
+                    ) else (
+                        set unauthorizedadminsexist=y
+                        echo Removing user %%a from Administrators...
+                        net localgroup Administrators "%%a" /delete
+                    )
+                )
+            )
+            Rem Case in which no unauthorized admins were deleted
+            if not defined unauthorizedadminsexist (
+                echo No unauthorized admins found.
+            ) else (
+                echo Done.
+            )
+            echo:
+
+            Rem Add authorized admins not yet admin
+            echo Adding missing admins...
+            set "missingadminsexist="
+            for /f "tokens=*" %%a in (!adminsfile!) do (
+                if not defined seen[%%a] (
+                    set missingadminsexist=y
+                    echo Adding missing admin: %%a
+                    net localgroup Administrators "%%a" /add
+                )
+            )
+            if not defined missingadminsexist (
+                echo No missing admins found.
+            ) else (
+                echo Done.
+            ) 
+        )
+    )
+
     echo *** Finished                                                                     ***
     echo ------------------------------------------------------------------------------------
     echo:
