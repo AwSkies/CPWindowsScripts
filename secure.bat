@@ -22,7 +22,9 @@ cls
 
 echo ------------------------------------------------------------------------------------
 echo *** Welcome to Sharon CyberPatriot Windows 10 and Server2019 script^^!             ***
-echo *** Made for and by team 14-3178 of Sharon High School                           ***
+echo *** Made by CaptainClumsy of team 14-3178 and 15-3557 of Sharon High School      ***
+echo *** Use of this script for a CyberPatriot competition by anyone not on a Sharon  ***
+echo ***     High School team is forbidden by CyberPatriot rules                      ***
 echo *** In the following options, choose y for yes, n for no, and c to cancel script ***
 echo ------------------------------------------------------------------------------------
 echo:
@@ -513,7 +515,6 @@ if %ERRORLEVEL% equ 1 (
 
 echo ------------------------------------------------------------------------------------
 echo *** End of script                                                                ***
-echo *** Made for and by team 14-3178 of Sharon High School                           ***
 echo *** Good luck^^!                                                                   ***
 echo ------------------------------------------------------------------------------------
 echo:
