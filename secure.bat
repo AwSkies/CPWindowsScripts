@@ -303,7 +303,7 @@ if %ERRORLEVEL% equ 1 (
             echo:
             
             Rem Delete unauthorized users
-            echo Deleting unauthorized users...
+            echo Deleting unauthorized users and enabling authorized ones...
             Rem Loops through each user on the computer
             set "unauthorizedadminsexist="
             for /f "delims=" %%a in ('cscript //NoLogo .\GetLocalUsers.vbs') do (
@@ -313,6 +313,7 @@ if %ERRORLEVEL% equ 1 (
                     if %%a equ %%i (
                         set seen[%%a]=y
                         set useradmin=y
+                        net user %%a /active:yes
                     )
                 )
                 if not defined useradmin (
